@@ -1,0 +1,4 @@
+{
+  "desc": "卡世界",
+  "rules": [{ "action": "allow", "page": "*" }]
+}

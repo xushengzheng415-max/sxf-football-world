@@ -1,0 +1,123 @@
+{
+  "format": "prototype-design",
+  "version": 1,
+  "project": "赛小蜂足球球员数据页",
+  "plan": "页面方案.json",
+  "plan_revision": 1,
+  "scope": [
+    "P01"
+  ],
+  "deferred": [],
+  "pages": [
+    {
+      "id": "P01",
+      "name": "球员数据",
+      "portal": "pc",
+      "state": "normal",
+      "source": "设计源/P01-球员数据.html",
+      "output": "PC端/P01-球员数据.png",
+      "viewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "full_page": true,
+      "status": "rendered",
+      "template_decision": {
+        "mode": "custom",
+        "reason": "球员档案与身价特定场景，沿用现有Vue详情结构与统一卡面，独立HTML原型。"
+      },
+      "capture_adjustments": [],
+      "sha256": "aa0bf9071b76d5e604c722415675e47a6bf58d940cf944624b5d724060c2a105",
+      "rendered_at": "2026-10-23T11:52:48.111Z",
+      "review": {
+        "status": "passed",
+        "checks": [
+          "文字精简",
+          "布局",
+          "素材",
+          "滚动与固定栏"
+        ],
+        "notes": "完整及不足全长图已逐张检查；转会时间线日期/原队/新队/状态/冻结估值与首次登记分开；1600与1280宽屏无溢出，六状态、弹窗及转会导航通过。"
+      }
+    },
+    {
+      "id": "P01",
+      "name": "球员数据",
+      "portal": "pc",
+      "state": "pending",
+      "source": "设计源/P01-数据不足.html",
+      "output": "验收证据/P01-数据不足.png",
+      "viewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "full_page": true,
+      "status": "rendered",
+      "template_decision": {
+        "mode": "custom",
+        "reason": "球员档案与身价特定场景，沿用现有Vue详情结构与统一卡面，独立HTML原型。"
+      },
+      "capture_adjustments": [],
+      "sha256": "c935c0f2392a6dea8b51592fa002870714bfdff46a4cbf0356532ca5e0cb1825",
+      "rendered_at": "2026-10-23T11:52:49.065Z",
+      "review": {
+        "status": "passed",
+        "checks": [
+          "文字精简",
+          "布局",
+          "素材",
+          "滚动与固定栏"
+        ],
+        "notes": "完整及不足全长图已逐张检查；转会时间线日期/原队/新队/状态/冻结估值与首次登记分开；1600与1280宽屏无溢出，六状态、弹窗及转会导航通过。"
+      }
+    }
+  ],
+  "assets": [
+    {
+      "path": "设计源/共享素材/chart.svg",
+      "source": "项目既有模拟球员素材、品牌与共享SVG库；详见原型说明",
+      "license": "项目内原型展示范围，正式使用仍须核对授权"
+    },
+    {
+      "path": "设计源/共享素材/event.svg",
+      "source": "项目既有模拟球员素材、品牌与共享SVG库；详见原型说明",
+      "license": "项目内原型展示范围，正式使用仍须核对授权"
+    },
+    {
+      "path": "设计源/共享素材/players.svg",
+      "source": "项目既有模拟球员素材、品牌与共享SVG库；详见原型说明",
+      "license": "项目内原型展示范围，正式使用仍须核对授权"
+    },
+    {
+      "path": "设计源/共享素材/shield.svg",
+      "source": "项目既有模拟球员素材、品牌与共享SVG库；详见原型说明",
+      "license": "项目内原型展示范围，正式使用仍须核对授权"
+    },
+    {
+      "path": "设计源/共享素材/team.svg",
+      "source": "项目既有模拟球员素材、品牌与共享SVG库；详见原型说明",
+      "license": "项目内原型展示范围，正式使用仍须核对授权"
+    },
+    {
+      "path": "设计源/共享素材/品牌.png",
+      "source": "项目既有模拟球员素材、品牌与共享SVG库；详见原型说明",
+      "license": "项目内原型展示范围，正式使用仍须核对授权"
+    },
+    {
+      "path": "设计源/共享素材/演示队徽.png",
+      "source": "项目既有模拟球员素材、品牌与共享SVG库；详见原型说明",
+      "license": "项目内原型展示范围，正式使用仍须核对授权"
+    },
+    {
+      "path": "设计源/共享素材/球员卡.png",
+      "source": "项目既有模拟球员素材、品牌与共享SVG库；详见原型说明",
+      "license": "项目内原型展示范围，正式使用仍须核对授权"
+    },
+    {
+      "path": "设计源/共享素材/球员形象.png",
+      "source": "项目既有模拟球员素材、品牌与共享SVG库；详见原型说明",
+      "license": "项目内原型展示范围，正式使用仍须核对授权"
+    }
+  ],
+  "transitions": []
+}

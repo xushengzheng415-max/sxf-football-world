@@ -1,0 +1,403 @@
+/**
+ * Galaxy / Cosmos Holofoil — poke-holo.simey.me layer structure (GPL).
+ * Tuned CLEAN for FUT gold cards: restrained idle foil, stronger on pointer.
+ * Face / frame must stay readable — not a rainbow smear.
+ */
+
+@property --pointer-from-left {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.3;
+}
+@property --pointer-from-top {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.35;
+}
+@property --pointer-from-center {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.45;
+}
+
+:root {
+  --card-aspect: 0.698;
+  --card-radius: 0;
+  --card-edge: hsl(47, 100%, 78%);
+  --card-glow: hsl(45, 80%, 70%);
+  --pointer-x: 30%;
+  --pointer-y: 35%;
+  --card-opacity: 0.28;
+  --foil-idle: 0.28;
+  --foil-active: 0.52;
+  --rotate-x: 0deg;
+  --rotate-y: 0deg;
+  --pointer-from-left: 0.3;
+  --pointer-from-top: 0.35;
+  --pointer-from-center: 0.45;
+  --cosmosbg: 50% 45%;
+  --space: 5%;
+}
+
+.holo-card {
+  position: relative;
+  width: min(78vw, 280px);
+  aspect-ratio: var(--card-aspect);
+  border-radius: 0;
+  background: transparent;
+  transform-style: preserve-3d;
+  perspective: 800px;
+  z-index: 1;
+  isolation: isolate;
+}
+
+.holo-card__rotator {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 0;
+  transform-style: preserve-3d;
+  transform: rotateY(var(--rotate-x)) rotateX(var(--rotate-y));
+  transition: transform 0.1s ease-out, filter 0.35s ease;
+  /* 纯卡轮廓：不用矩形 box-shadow，改用跟随透明 PNG 的 drop-shadow */
+  box-shadow: none;
+  filter:
+    drop-shadow(0 14px 22px rgba(0, 0, 0, 0.72))
+    drop-shadow(0 0 18px rgba(240, 199, 94, 0.22));
+  cursor: grab;
+  outline: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  display: grid;
+  touch-action: none;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.holo-card.is-pointer .holo-card__rotator,
+.holo-card.is-showcase .holo-card__rotator,
+.holo-card__rotator:focus-visible {
+  box-shadow: none;
+  filter:
+    drop-shadow(0 18px 28px rgba(0, 0, 0, 0.8))
+    drop-shadow(0 0 22px rgba(240, 199, 94, 0.45));
+}
+
+.holo-card__front,
+.holo-card__shine,
+.holo-card__glare {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  pointer-events: none;
+}
+
+.holo-card__front {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+}
+
+.holo-card__front img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 0;
+  background: transparent;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* Shared card silhouette mask + soft face fade (keep portrait readable) */
+.holo-card__shine,
+.holo-card__glare {
+  -webkit-mask-image:
+    radial-gradient(ellipse 58% 48% at 50% 40%, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.55) 45%, #000 78%),
+    var(--card-mask);
+  mask-image:
+    radial-gradient(ellipse 58% 48% at 50% 40%, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.55) 45%, #000 78%),
+    var(--card-mask);
+  -webkit-mask-size: contain, contain;
+  mask-size: contain, contain;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* —— SHINE: cosmos bottom + muted rainbow —— */
+.holo-card__shine {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  overflow: hidden;
+  border-radius: inherit;
+  transform: translateZ(1px);
+
+  background-image:
+    url("../assets/cosmos/cosmos-bottom.png"),
+    repeating-linear-gradient(
+      82deg,
+      hsl(53, 45%, 62%) calc(var(--space) * 1),
+      hsl(93, 40%, 55%) calc(var(--space) * 2),
+      hsl(176, 38%, 55%) calc(var(--space) * 3),
+      hsl(228, 42%, 58%) calc(var(--space) * 4),
+      hsl(283, 40%, 58%) calc(var(--space) * 5),
+      hsl(326, 38%, 56%) calc(var(--space) * 6),
+      hsl(326, 38%, 56%) calc(var(--space) * 7),
+      hsl(283, 40%, 58%) calc(var(--space) * 8),
+      hsl(228, 42%, 58%) calc(var(--space) * 9),
+      hsl(176, 38%, 55%) calc(var(--space) * 10),
+      hsl(93, 40%, 55%) calc(var(--space) * 11),
+      hsl(53, 45%, 62%) calc(var(--space) * 12)
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(180, 40%, 85%, 0.28) 8%,
+      hsla(180, 12%, 50%, 0.12) 42%,
+      transparent 70%
+    );
+
+  /* softer than stock color-burn/multiply stack */
+  background-blend-mode: soft-light, soft-light;
+  background-position:
+    var(--cosmosbg),
+    calc(10% + (var(--pointer-from-left) * 80%)) calc(10% + (var(--pointer-from-top) * 80%)),
+    center center;
+  background-size: cover, 360% 780%, cover;
+
+  filter: brightness(0.92) contrast(1.05) saturate(0.7);
+  mix-blend-mode: color-dodge;
+  opacity: var(--card-opacity);
+  will-change: background-position, opacity;
+  transition: opacity 0.2s ease;
+}
+
+.holo-card__shine::before,
+.holo-card__shine::after {
+  content: "";
+  grid-area: 1 / 1;
+  border-radius: inherit;
+  width: 100%;
+  height: 100%;
+}
+
+/* —— middle cosmos (stars) — very light —— */
+.holo-card__shine::before {
+  z-index: 2;
+  background-image:
+    url("../assets/cosmos/cosmos-middle-trans.png"),
+    repeating-linear-gradient(
+      82deg,
+      hsl(53, 40%, 60%) calc(var(--space) * 1),
+      hsl(93, 35%, 52%) calc(var(--space) * 2),
+      hsl(176, 35%, 52%) calc(var(--space) * 3),
+      hsl(228, 38%, 55%) calc(var(--space) * 4),
+      hsl(283, 36%, 55%) calc(var(--space) * 5),
+      hsl(326, 34%, 54%) calc(var(--space) * 6),
+      hsl(326, 34%, 54%) calc(var(--space) * 7),
+      hsl(283, 36%, 55%) calc(var(--space) * 8),
+      hsl(228, 38%, 55%) calc(var(--space) * 9),
+      hsl(176, 35%, 52%) calc(var(--space) * 10),
+      hsl(93, 35%, 52%) calc(var(--space) * 11),
+      hsl(53, 40%, 60%) calc(var(--space) * 12)
+    );
+  background-blend-mode: soft-light, soft-light;
+  background-position:
+    var(--cosmosbg),
+    calc(15% + (var(--pointer-from-left) * 70%)) calc(15% + (var(--pointer-from-top) * 70%));
+  background-size: cover, 360% 780%;
+  filter: brightness(0.95) contrast(1.15) saturate(0.65);
+  mix-blend-mode: overlay;
+  opacity: 0.4;
+}
+
+/* —— top sparkles — whisper —— */
+.holo-card__shine::after {
+  z-index: 3;
+  background-image:
+    url("../assets/cosmos/cosmos-top-trans.png"),
+    repeating-linear-gradient(
+      82deg,
+      hsl(53, 35%, 58%) calc(var(--space) * 1),
+      hsl(176, 30%, 52%) calc(var(--space) * 3),
+      hsl(283, 32%, 55%) calc(var(--space) * 5),
+      hsl(53, 35%, 58%) calc(var(--space) * 7),
+      hsl(176, 30%, 52%) calc(var(--space) * 9),
+      hsl(283, 32%, 55%) calc(var(--space) * 11),
+      hsl(53, 35%, 58%) calc(var(--space) * 12)
+    );
+  background-blend-mode: soft-light, multiply;
+  background-position:
+    var(--cosmosbg),
+    calc(20% + (var(--pointer-from-left) * 60%)) calc(20% + (var(--pointer-from-top) * 60%));
+  background-size: cover, 360% 780%;
+  filter: brightness(0.9) contrast(1.2) saturate(0.55);
+  mix-blend-mode: soft-light;
+  opacity: 0.28;
+}
+
+/* —— GLARE: thin soft highlight —— */
+.holo-card__glare {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  border-radius: inherit;
+  overflow: hidden;
+  transform: translateZ(1.41px);
+
+  background-image: radial-gradient(
+    farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.45) 0%,
+    hsla(210, 40%, 90%, 0.18) 12%,
+    hsla(250, 20%, 30%, 0.08) 38%,
+    transparent 58%
+  );
+  filter: brightness(1) contrast(1.15) saturate(1.1);
+  mix-blend-mode: soft-light;
+  opacity: calc(0.18 + var(--pointer-from-center) * 0.22);
+  transition: opacity 0.2s ease;
+}
+
+.holo-card__glare::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: radial-gradient(
+    circle 28% at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.35) 0%,
+    hsla(280, 40%, 90%, 0.12) 35%,
+    transparent 70%
+  );
+  filter: none;
+  mix-blend-mode: soft-light;
+  opacity: 0.45;
+}
+
+/* Pointer / showcase: a bit brighter foil */
+.holo-card.is-pointer,
+.holo-card.is-showcase {
+  --card-opacity: var(--foil-active);
+}
+.holo-card.is-pointer .holo-card__shine::before,
+.holo-card.is-showcase .holo-card__shine::before {
+  opacity: 0.55;
+}
+.holo-card.is-pointer .holo-card__shine::after,
+.holo-card.is-showcase .holo-card__shine::after {
+  opacity: 0.38;
+}
+.holo-card.is-pointer .holo-card__glare,
+.holo-card.is-showcase .holo-card__glare {
+  opacity: calc(0.28 + var(--pointer-from-center) * 0.28);
+}
+
+/* Idle auto-holo — gentle, no brightness pump */
+.holo-card:not(.is-pointer):not(.is-showcase) {
+  animation: cosmos-idle-vars 6s ease-in-out infinite alternate;
+}
+.holo-card:not(.is-pointer):not(.is-showcase) .holo-card__rotator {
+  animation: cosmos-idle-tilt 7s ease-in-out infinite alternate;
+}
+.holo-card:not(.is-pointer):not(.is-showcase) .holo-card__shine {
+  animation: cosmos-idle-bg 6s ease-in-out infinite alternate;
+}
+.holo-card:not(.is-pointer):not(.is-showcase) .holo-card__shine::before {
+  animation: cosmos-idle-bg-mid 7s ease-in-out infinite alternate;
+}
+.holo-card:not(.is-pointer):not(.is-showcase) .holo-card__shine::after {
+  animation: cosmos-idle-bg-top 5.5s ease-in-out infinite alternate;
+}
+
+@keyframes cosmos-idle-vars {
+  0% {
+    --pointer-x: 22%;
+    --pointer-y: 28%;
+    --pointer-from-left: 0.22;
+    --pointer-from-top: 0.28;
+    --pointer-from-center: 0.4;
+    --cosmosbg: 46% 42%;
+  }
+  100% {
+    --pointer-x: 72%;
+    --pointer-y: 62%;
+    --pointer-from-left: 0.72;
+    --pointer-from-top: 0.62;
+    --pointer-from-center: 0.5;
+    --cosmosbg: 54% 52%;
+  }
+}
+
+@keyframes cosmos-idle-tilt {
+  0% { transform: rotateY(-5deg) rotateX(3deg); }
+  100% { transform: rotateY(5deg) rotateX(-3deg); }
+}
+
+@keyframes cosmos-idle-bg {
+  0% { background-position: 46% 42%, 12% 20%, center; }
+  100% { background-position: 54% 52%, 85% 70%, center; }
+}
+
+@keyframes cosmos-idle-bg-mid {
+  0% { background-position: 46% 42%, 10% 22%; }
+  100% { background-position: 54% 52%, 88% 68%; }
+}
+
+@keyframes cosmos-idle-bg-top {
+  0% { background-position: 46% 42%, 14% 26%; }
+  100% { background-position: 54% 52%, 82% 64%; }
+}
+
+.holo-card.is-pointer .holo-card__rotator,
+.holo-card.is-showcase .holo-card__rotator,
+.holo-card.is-pointer .holo-card__shine,
+.holo-card.is-showcase .holo-card__shine,
+.holo-card.is-pointer .holo-card__shine::before,
+.holo-card.is-showcase .holo-card__shine::before,
+.holo-card.is-pointer .holo-card__shine::after,
+.holo-card.is-showcase .holo-card__shine::after {
+  animation: none;
+}
+.holo-card.is-pointer,
+.holo-card.is-showcase {
+  animation: none;
+}
+
+.holo-card--mini {
+  width: 100%;
+  max-width: 110px;
+  margin: 0 auto;
+  --card-opacity: 0.22;
+}
+.holo-card--mini:not(.is-pointer):not(.is-showcase) .holo-card__rotator {
+  animation: none;
+}
+.holo-card--mini .holo-card__shine::before { opacity: 0.3; }
+.holo-card--mini .holo-card__shine::after { opacity: 0.2; }
+
+@media (prefers-reduced-motion: reduce) {
+  .holo-card,
+  .holo-card__rotator,
+  .holo-card__shine,
+  .holo-card__shine::before,
+  .holo-card__shine::after {
+    animation: none !important;
+  }
+  .holo-card {
+    --card-opacity: 0.3;
+    --pointer-from-left: 0.35;
+    --pointer-from-top: 0.28;
+    --pointer-from-center: 0.45;
+    --pointer-x: 35%;
+    --pointer-y: 28%;
+  }
+}

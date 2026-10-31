@@ -1,0 +1,63 @@
+<view class="page">
+  <view class="topbar">
+    <image class="brand" src="/assets/card-world-icon.jpg" mode="aspectFill"></image>
+    <view class="topbar-text">
+      <text class="title">卡世界</text>
+      <text class="sub">我的主卡 · 签约 · 组阵</text>
+    </view>
+    <view class="badge">免费</view>
+  </view>
+
+  <view class="panel">
+    <view class="panel-head">
+      <text class="h2">我的主卡</text>
+      <text class="hint">{{hint}}</text>
+    </view>
+    <view class="hero">
+      <image class="hero-card" src="{{cardUrl}}" mode="widthFix"></image>
+      <text class="foil-tip">轻晃可看箔光 · 小程序跟手版后续加强</text>
+    </view>
+    <view class="stats">
+      <view class="stat" wx:for="{{stats}}" wx:key="label">
+        <text class="stat-num">{{item.num}}</text>
+        <text class="stat-label">{{item.label}}</text>
+      </view>
+    </view>
+    <view class="quick">
+      <view class="quick-btn" data-tab="lineup" bindtap="goTab">
+        <text class="quick-ico">⚽</text>
+        <view class="quick-txt">
+          <text class="quick-strong">去组阵</text>
+          <text class="quick-em">凑齐 5 人发起轻对战</text>
+        </view>
+      </view>
+      <view class="quick-btn" data-tab="album" bindtap="goTab">
+        <text class="quick-ico">📝</text>
+        <view class="quick-txt">
+          <text class="quick-strong">去签约</text>
+          <text class="quick-em">每日免费同城建档</text>
+        </view>
+      </view>
+    </view>
+    <view class="actions">
+      <button class="btn gold" bindtap="onShare">分享主卡</button>
+      <button class="btn ghost" bindtap="onGrowth">成长印记</button>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="panel-head">
+      <text class="h2">成长印记</text>
+      <text class="hint">按周解锁边框 / 贴纸</text>
+    </view>
+    <scroll-view scroll-x class="growth">
+      <view class="stamp {{item.lockedClass}}" wx:for="{{stamps}}" wx:key="name">
+        <text class="stamp-ico">{{item.icon}}</text>
+        <text class="stamp-name">{{item.name}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="pad"></view>
+  <card-tabbar active="main"></card-tabbar>
+</view>

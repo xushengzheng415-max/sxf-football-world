@@ -1,0 +1,22 @@
+{
+  "format": "product-blueprint",
+  "revision": 1,
+  "project": "赛小蜂足球球员数据页",
+  "pages": [
+    {
+      "id": "P01",
+      "name": "球员数据",
+      "portal": "pc",
+      "states": [
+        "normal",
+        "pending"
+      ],
+      "layout": {
+        "viewport": {
+          "width": 1600,
+          "height": 1000
+        }
+      }
+    }
+  ]
+}

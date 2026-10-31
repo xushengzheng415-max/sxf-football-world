@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#07090f">
+  <title>卡世界｜赛小蜂足球</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./player-card-holo.css?v=20261030-cardworld2">
+  <link rel="stylesheet" href="./my-main-card.css?v=20261030-cardworld2">
+</head>
+<body>
+  <div class="mmc" id="app" hidden>
+    <header class="mmc-nav">
+      <div class="mmc-brand">
+        <img class="mmc-brand__icon" src="./assets/player-card-holo/card-world-icon.jpg" alt="卡世界" width="40" height="40">
+        <h1>卡世界</h1>
+      </div>
+      <button type="button" class="mmc-chip" id="btnLibrary">卡库</button>
+    </header>
+
+    <nav class="mmc-tabs" id="playerTabs" hidden aria-label="切换球员"></nav>
+
+    <section class="mmc-hero" aria-label="主卡">
+      <div id="heroCard"></div>
+      <span class="mmc-foil-badge" id="foilBadge">Cosmos 轻箔 · poke-holo</span>
+      <p class="mmc-card-title" id="cardTitle"></p>
+    </section>
+
+    <section class="mmc-glass">
+      <div class="mmc-marks" id="growthMarks">
+        <h2 class="mmc-marks__title">成长印记</h2>
+        <div class="mmc-marks__row" id="stamps"></div>
+      </div>
+      <button type="button" class="mmc-btn mmc-btn--gold" id="btnShare">生成分享海报</button>
+      <button type="button" class="mmc-btn mmc-btn--ghost" id="btnLineup">去组阵轻挑战</button>
+      <button type="button" class="mmc-btn mmc-btn--ghost" id="btnEdit">编辑此卡</button>
+    </section>
+
+    <p class="mmc-foot">轻晃卡片可看 Cosmos 箔光 · 正式成卡由球员卡套件生成</p>
+  </div>
+
+  <div class="mmc-state" id="bootState" role="status">正在打开卡世界…</div>
+  <div class="mmc-toast" id="toast" role="status"></div>
+  <div class="mmc-share" id="shareSheet" hidden>
+    <div class="mmc-share__panel">
+      <h2>分享海报</h2>
+      <img id="sharePreview" alt="主卡预览">
+      <p>长按图片保存，或发给好友</p>
+      <button type="button" class="mmc-btn mmc-btn--ghost" id="btnShareClose">关闭</button>
+    </div>
+  </div>
+
+  <script src="./player-card-holo.js?v=20261030-cardworld2"></script>
+  <script src="./my-main-card.js?v=20261030-cardworld2"></script>
+</body>
+</html>

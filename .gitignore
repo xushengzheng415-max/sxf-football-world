@@ -1,0 +1,17 @@
+# Local / agent scratch
+.report-work/
+.DS_Store
+Thumbs.db
+*.log
+
+# WeChat DevTools private local overrides
+project.private.config.json
+miniprogram/project.private.config.json
+
+# Dependencies / build (if added later)
+node_modules/
+dist/
+unpackage/
+
+# Mojibake duplicate of 卡世界落地包 (empty / encoding glitch)
+鍗′笘鐣岃惤鍦板寘/

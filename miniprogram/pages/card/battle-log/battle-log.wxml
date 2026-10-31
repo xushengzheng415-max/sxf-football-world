@@ -1,0 +1,19 @@
+<view class="page">
+  <text class="tip">不上榜 · 不掉卡 · 可分享邀人应战</text>
+  <view class="empty" wx:if="{{isEmpty}}">
+    <text class="empty-ico">📜</text>
+    <text class="empty-title">还没有战报</text>
+    <text class="empty-p">组齐阵容发起轻对战后会出现在这里</text>
+    <button class="btn gold" bindtap="goLineup">去组阵</button>
+  </view>
+  <view class="list" wx:else>
+    <view class="row" wx:for="{{rows}}" wx:key="id">
+      <view class="row-main">
+        <text class="outcome">{{item.outcome}}</text>
+        <text class="score">{{item.scoreText}}</text>
+      </view>
+      <text class="comment">{{item.comment}}</text>
+      <text class="time">{{item.timeText}}</text>
+    </view>
+  </view>
+</view>

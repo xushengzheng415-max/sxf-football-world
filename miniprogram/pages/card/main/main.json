@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "卡世界",
+  "navigationBarBackgroundColor": "#07090f",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#07090f",
+  "usingComponents": {
+    "card-tabbar": "/components/tabbar/tabbar"
+  }
+}

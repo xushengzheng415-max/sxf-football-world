@@ -1,0 +1,14 @@
+<view class="ctab">
+  <view class="ctab-item" data-tab="main" bindtap="go">
+    <view class="ctab-ico">🃏</view>
+    <view class="ctab-txt {{mainOn}}">主卡</view>
+  </view>
+  <view class="ctab-item" data-tab="album" bindtap="go">
+    <view class="ctab-ico">📚</view>
+    <view class="ctab-txt {{albumOn}}">卡册·签约</view>
+  </view>
+  <view class="ctab-item" data-tab="lineup" bindtap="go">
+    <view class="ctab-ico">⚽</view>
+    <view class="ctab-txt {{lineupOn}}">组阵</view>
+  </view>
+</view>

@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "pages/card/main/main",
+    "pages/card/album-sign/album-sign",
+    "pages/card/lineup/lineup",
+    "pages/card/battle-log/battle-log"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#07090f",
+    "navigationBarTitleText": "卡世界",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#07090f"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

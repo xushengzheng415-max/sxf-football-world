@@ -1,0 +1,59 @@
+<view class="page">
+  <view class="panel">
+    <view class="panel-head">
+      <text class="h2">5 人阵容</text>
+      <text class="hint">1GK + 4 · 新手场免费</text>
+    </view>
+    <view class="pitch">
+      <view class="row" wx:for="{{rows}}" wx:key="index" wx:for-index="rowIndex">
+        <view
+          class="slot {{item.filledClass}} {{item.activeClass}}"
+          wx:for="{{item.cells}}"
+          wx:for-item="cell"
+          wx:key="key"
+          data-key="{{cell.key}}"
+          bindtap="onSlot"
+        >
+          <text class="pos">{{cell.posTag}}</text>
+          <image wx:if="{{cell.filled}}" class="avatar" src="{{cell.cardUrl}}" mode="aspectFill"></image>
+          <text class="name">{{cell.name}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="picker" wx:if="{{pickerOpen}}">
+      <view class="panel-head">
+        <text class="h2">选择球员</text>
+        <text class="hint">来自卡册</text>
+      </view>
+      <view class="chips">
+        <view
+          class="chip {{item.usedClass}}"
+          wx:for="{{pickerList}}"
+          wx:key="id"
+          data-id="{{item.id}}"
+          bindtap="onPick"
+        >{{item.label}}</view>
+        <view class="chip" data-id="" bindtap="onPick">清空此位</view>
+      </view>
+    </view>
+
+    <view class="challenge">
+      <view class="challenge-meta">
+        <text>本周轻对战（非排位）</text>
+        <text class="pct">{{pctText}}</text>
+      </view>
+      <view class="bar"><view class="fill" style="width: {{pctWidth}};"></view></view>
+      <text class="tip">{{tip}}</text>
+    </view>
+
+    <view class="actions">
+      <button class="btn ghost" bindtap="onSave">保存阵容</button>
+      <button class="btn gold" disabled="{{challengeDisabled}}" bindtap="onChallenge">发起轻对战</button>
+    </view>
+    <button class="btn ghost full" bindtap="goLog">战报记录</button>
+  </view>
+
+  <view class="pad"></view>
+  <card-tabbar active="lineup"></card-tabbar>
+</view>

@@ -1,0 +1,45 @@
+.page {
+  min-height: 100vh; padding: 12px 14px 88px; box-sizing: border-box;
+  background: linear-gradient(180deg, #101522, #07090f); color: #f3f5fa;
+}
+.panel {
+  margin: 8px 0; padding: 14px; border-radius: 18px;
+  background: rgba(18,24,38,.62); border: 1px solid rgba(255,215,130,.18);
+}
+.meet, .success { display: flex; align-items: center; gap: 12px; }
+.meet-ico, .ok {
+  width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.25); font-size: 22px;
+}
+.ok { color: #86efac; font-weight: 700; }
+.meet-body { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.meet-title { font-size: 14px; font-weight: 700; }
+.meet-remain { font-size: 11px; color: #9aa3b5; }
+.panel-head { display: flex; justify-content: space-between; margin-bottom: 10px; }
+.h2 { font-size: 15px; font-weight: 700; }
+.hint { font-size: 11px; color: #9aa3b5; }
+.legend { font-size: 11px; color: #9aa3b5; margin-bottom: 10px; }
+.grid { display: flex; flex-wrap: wrap; gap: 10px; }
+.tile {
+  width: calc(33.33% - 7px); position: relative; text-align: center;
+}
+.tile-img {
+  width: 100%; aspect-ratio: 30/43; border-radius: 8px; background: #111;
+}
+.tile-name { display: block; margin-top: 6px; font-size: 12px; font-weight: 600; }
+.tile-meta { display: block; font-size: 11px; color: #9aa3b5; }
+.tile-main {
+  position: absolute; left: 4px; top: 4px; font-size: 10px; padding: 2px 6px; border-radius: 999px;
+  background: #087744; color: #fff;
+}
+.empty { text-align: center; padding: 24px 8px; color: #9aa3b5; }
+.empty-title { display: block; color: #f3f5fa; font-weight: 700; margin-bottom: 6px; }
+.empty-p { font-size: 12px; }
+.btn {
+  flex: 0 0 auto; min-width: 96px; font-size: 13px; font-weight: 600;
+  border-radius: 12px; padding: 10px 12px; border: none;
+}
+.btn.green { background: linear-gradient(135deg, #2bb56a, #1f8f4e); color: #fff; }
+.btn.gold { background: linear-gradient(135deg, #ffe39a, #d4a84b); color: #1a1408; }
+.btn[disabled] { opacity: .45; }
+.pad { height: 12px; }

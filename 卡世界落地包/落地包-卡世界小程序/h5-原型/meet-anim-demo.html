@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+<title>签约揭晓 · 效果试看</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--gold:#f0c75e;--bg:#05070d}
+body{
+  min-height:100vh;background:radial-gradient(ellipse at 50% 18%,#1a1528 0%,var(--bg) 55%);
+  color:#fff;font-family:"Noto Sans SC",system-ui,sans-serif;
+  display:flex;flex-direction:column;align-items:center;padding:16px 12px 36px;gap:10px;
+}
+h1{font-size:17px;font-weight:800}
+.sub{font-size:11px;color:#9aa3b5;text-align:center;max-width:340px;line-height:1.45}
+.modes{
+  display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:360px;
+}
+.modes button{
+  appearance:none;border:1px solid rgba(240,199,94,.35);background:rgba(255,255,255,.06);
+  color:#eee;font-size:12px;padding:7px 10px;border-radius:999px;cursor:pointer;font-weight:600;
+}
+.modes button.on{background:linear-gradient(180deg,#f5d76e,#c9a227);color:#1a1408;border-color:transparent}
+.scene{
+  position:relative;width:min(94vw,360px);height:520px;margin-top:4px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;border-radius:20px;
+  background:radial-gradient(circle at 50% 58%,rgba(240,199,94,.07),transparent 55%);
+  touch-action:none;
+}
+.scene.dim::after{
+  content:"";position:absolute;inset:0;background:rgba(4,5,14,.58);pointer-events:none;z-index:2;
+  animation:fadeIn .35s forwards;
+}
+@keyframes fadeIn{to{opacity:1}}
+
+/* PACK */
+.pack{position:relative;width:148px;height:220px;z-index:5;transform-style:preserve-3d}
+.pack.shake{animation:packShake .5s ease}
+.pack.charge{animation:packCharge .9s ease-in-out}
+@keyframes packShake{
+  0%,100%{transform:translateX(0) rotate(0)}
+  20%{transform:translateX(-7px) rotate(-2.5deg)}
+  40%{transform:translateX(8px) rotate(2.5deg)}
+  60%{transform:translateX(-5px) rotate(-1.5deg)}
+  80%{transform:translateX(4px) rotate(1deg)}
+}
+@keyframes packCharge{
+  0%,100%{transform:scale(1);filter:drop-shadow(0 0 0 transparent)}
+  40%{transform:scale(1.06);filter:drop-shadow(0 0 22px rgba(240,199,94,.85))}
+  70%{transform:scale(.98)}
+}
+.pack-face{
+  position:absolute;inset:0;border-radius:14px;overflow:hidden;
+  background:linear-gradient(160deg,#2a1f0a 0%,#12101a 40%,#0a0c14 100%);
+  border:1px solid rgba(240,199,94,.45);
+  box-shadow:0 18px 40px rgba(0,0,0,.55),inset 0 0 40px rgba(240,199,94,.12);
+}
+.pack-face::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.18) 48%,transparent 62%);
+  animation:sheen 3.5s ease-in-out infinite;
+}
+@keyframes sheen{0%,100%{transform:translateX(-40%)}50%{transform:translateX(40%)}}
+.pack-brand{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;z-index:2;
+}
+.pack-brand strong{font-size:22px;letter-spacing:.28em;color:var(--gold)}
+.pack-brand span{font-size:11px;color:#fff8;letter-spacing:.12em}
+#packWhole{z-index:10}
+.half{position:absolute;left:0;right:0;overflow:hidden;pointer-events:none;opacity:0}
+.pack.is-ripping .half,.pack.is-split .half{opacity:1}
+.half .pack-face{position:relative;width:100%}
+.half-top{top:0;height:18%;z-index:6;transform-origin:50% 100%}
+.half-bot{bottom:0;height:82%;z-index:5;transform-origin:50% 0%}
+.half-top .pack-face{height:220px}
+.half-bot .pack-face{height:220px;margin-top:-18%}
+.cutter{
+  position:absolute;top:18%;left:-8%;width:10px;height:10px;border-radius:50%;
+  background:#fff;box-shadow:0 0 12px 4px #f0c75e,-20px 0 18px 2px rgba(240,199,94,.55);
+  opacity:0;z-index:8;
+}
+.tearline{
+  position:absolute;top:18%;left:6%;right:6%;height:2px;
+  background:linear-gradient(90deg,transparent,#f0c75e,transparent);
+  transform:scaleX(0);transform-origin:left;opacity:0;z-index:7;
+}
+.pack.is-ripping .cutter{animation:cut .45s ease-out forwards}
+.pack.is-ripping .tearline{animation:tear .45s ease-out forwards}
+@keyframes cut{0%{opacity:0;left:-8%}20%{opacity:1}100%{opacity:0;left:102%}}
+@keyframes tear{0%{opacity:0;transform:scaleX(0)}40%{opacity:1}100%{opacity:.3;transform:scaleX(1)}}
+.pack.is-split .half-top{animation:flyTop .9s ease-in forwards}
+.pack.is-split .half-bot{animation:flyBot .85s ease-in forwards}
+.pack.is-gone{opacity:0!important;visibility:hidden;pointer-events:none;transition:opacity .25s}
+@keyframes flyTop{to{transform:translate(-40px,-70px) rotate(-18deg);opacity:0}}
+@keyframes flyBot{to{transform:translate(30px,90px) rotate(12deg);opacity:0}}
+
+/* Drag foil strip */
+.foil-strip{
+  display:none;position:absolute;left:8%;right:8%;top:14%;height:28px;z-index:12;
+  border-radius:6px;cursor:grab;touch-action:none;
+  background:linear-gradient(90deg,#c9a227,#f5e6a3 40%,#c9a227 70%,#f0c75e);
+  box-shadow:0 2px 10px rgba(240,199,94,.45),inset 0 1px 0 rgba(255,255,255,.45);
+  color:#1a1408;font-size:11px;font-weight:800;letter-spacing:.08em;
+  display:none;align-items:center;justify-content:center;
+}
+.mode-drag .foil-strip{display:flex}
+.foil-strip.dragging{cursor:grabbing;opacity:.95}
+.foil-hint{display:none;position:absolute;top:46%;font-size:12px;color:#f0c75e;z-index:12;pointer-events:none}
+.mode-drag .foil-hint{display:block}
+
+/* CARD(s) */
+.card3d{
+  position:absolute;width:min(78vw,300px);height:min(112vw,430px);z-index:4;
+  perspective:1000px;opacity:0;pointer-events:none;
+}
+.card3d.show{opacity:1;pointer-events:auto}
+.card3d.pop{animation:cardOut .7s cubic-bezier(.2,1.2,.3,1) forwards}
+@keyframes cardOut{
+  0%{transform:translateY(40px) scale(.4);opacity:0}
+  100%{transform:translateY(-20px) scale(1);opacity:1}
+}
+.flip{
+  width:100%;height:100%;position:relative;transform-style:preserve-3d;
+  transition:transform .65s cubic-bezier(.2,.8,.2,1);
+}
+.card3d.flipped .flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px}
+.face-back{
+  background:linear-gradient(145deg,#3a2a0c,#0c1018);
+  border:2px solid rgba(240,199,94,.7);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 28px rgba(240,199,94,.35);
+}
+.face-back span{font-size:18px;font-weight:800;color:var(--gold);letter-spacing:.2em}
+.face-front{transform:rotateY(180deg);filter:drop-shadow(0 18px 28px rgba(0,0,0,.7));overflow:hidden}
+.face-front img{width:100%;height:100%;object-fit:contain;display:block}
+.card3d.foil-on{z-index:8}
+.card3d.glow::before{
+  content:"";position:absolute;inset:-30%;z-index:-1;border-radius:50%;
+  background:radial-gradient(circle,rgba(240,199,94,.55),transparent 65%);
+  animation:pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:.45;transform:scale(.95)}50%{opacity:1;transform:scale(1.08)}}
+
+/* cosmos foil overlay on front */
+.foil{
+  position:absolute;inset:0;border-radius:12px;pointer-events:none;opacity:0;mix-blend-mode:color-dodge;
+  background:
+    radial-gradient(circle at var(--mx,50%) var(--my,40%),rgba(255,180,255,.55),transparent 42%),
+    radial-gradient(circle at calc(var(--mx,50%) + 20%) calc(var(--my,40%) + 15%),rgba(120,220,255,.4),transparent 38%),
+    linear-gradient(115deg,transparent 30%,rgba(255,255,255,.35) 48%,transparent 62%);
+  transition:opacity .3s;
+}
+.card3d.foil-on .foil{opacity:.85}
+/* tilt the whole card shell — never re-rotate .face-front or backface hides it */
+.card3d.foil-on.show{
+  transform:translateY(-20px) scale(1) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+  transition:transform .08s linear;
+}
+
+/* cascade fan */
+.fan{position:absolute;inset:0;display:none;align-items:center;justify-content:center;z-index:4;pointer-events:none}
+.mode-fan .fan{display:flex}
+.fan .card3d{position:absolute;opacity:0}
+.fan .card3d.show{opacity:1}
+
+.rays{position:absolute;inset:0;pointer-events:none;opacity:0;z-index:3}
+.rays.on{opacity:1}
+.rays span{
+  position:absolute;left:50%;top:50%;width:4px;height:160px;margin-left:-2px;margin-top:-160px;
+  background:linear-gradient(to top,transparent,rgba(240,199,94,.7));
+  transform-origin:bottom center;opacity:0;
+}
+.rays.on span{animation:ray .9s ease-out forwards}
+@keyframes ray{0%{opacity:0;transform:rotate(var(--r)) scaleY(.2)}40%{opacity:1}100%{opacity:0;transform:rotate(var(--r)) scaleY(1.4)}}
+.confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:3}
+.bit{position:absolute;width:8px;height:8px;border-radius:2px;top:45%;left:50%;opacity:0}
+.bit.go{animation:bitFly 1.1s ease-out forwards}
+@keyframes bitFly{
+  0%{opacity:1;transform:translate(0,0) rotate(0) scale(1)}
+  100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--rot)) scale(.4)}
+}
+
+.btn{
+  appearance:none;border:none;border-radius:14px;padding:13px 28px;
+  font-size:15px;font-weight:800;cursor:pointer;margin-top:4px;
+  background:linear-gradient(180deg,#f5d76e,#c9a227);color:#1a1408;
+  box-shadow:0 8px 24px rgba(240,199,94,.35);
+}
+.btn:disabled{opacity:.5;cursor:default}
+.hint{font-size:12px;color:#9aa3b5;min-height:18px;text-align:center}
+a{color:#9aa3b5;font-size:12px}
+.credit{font-size:10px;color:#f0c75e88;text-align:center;max-width:320px;line-height:1.4}
+</style>
+</head>
+<body>
+  <h1>签约揭晓 · 效果试看</h1>
+  <p class="sub">切换下面模式对比；灵感自 unsleeved / Holo Pack / poke-holo</p>
+  <div class="modes" id="modes">
+    <button type="button" data-mode="base">基础揭晓</button>
+    <button type="button" data-mode="charge">稀有蓄力</button>
+    <button type="button" data-mode="drag">拖箔撕包</button>
+    <button type="button" data-mode="foil" class="on">翻开箔光 ✓</button>
+    <button type="button" data-mode="fan">多卡扇出</button>
+  </div>
+  <div class="scene" id="scene">
+    <div class="rays" id="rays"></div>
+    <div class="confetti" id="confetti"></div>
+    <div class="foil-hint" id="foilHint">← 拖金色箔条撕开 →</div>
+    <div class="pack" id="pack">
+      <div class="half half-top"><div class="pack-face"></div></div>
+      <div class="half half-bot"><div class="pack-face"></div></div>
+      <div class="pack-face" id="packWhole">
+        <div class="pack-brand"><strong>赛小蜂</strong><span>DAILY MEET</span></div>
+      </div>
+      <div class="foil-strip" id="foilStrip">撕 开</div>
+      <div class="cutter"></div>
+      <div class="tearline"></div>
+    </div>
+    <div class="card3d" id="card">
+      <div class="flip">
+        <div class="face face-back"><span>赛小蜂</span></div>
+        <div class="face face-front">
+          <img src="assets/tie-dongze-card.png" alt="卡" />
+          <div class="foil" id="foilLayer"></div>
+        </div>
+      </div>
+    </div>
+    <div class="fan" id="fan"></div>
+  </div>
+  <button class="btn" id="btn" type="button">撕开签约卡</button>
+  <p class="hint" id="hint">点按钮开始</p>
+  <p class="credit">基础/蓄力 ≈ unsleeved · 拖撕 ≈ Holo Pack · 箔光 ≈ poke-holo cosmos · 扇出 ≈ Effect Labs cascade</p>
+  <a href="index.html">← 回主原型</a>
+<script>
+(function(){
+  var mode='foil';
+  var pack=document.getElementById('pack');
+  var card=document.getElementById('card');
+  var btn=document.getElementById('btn');
+  var hint=document.getElementById('hint');
+  var scene=document.getElementById('scene');
+  var rays=document.getElementById('rays');
+  var confetti=document.getElementById('confetti');
+  var foilStrip=document.getElementById('foilStrip');
+  var fan=document.getElementById('fan');
+  var busy=false;
+  var timers=[];
+
+  for(var i=0;i<12;i++){
+    var s=document.createElement('span');
+    s.style.setProperty('--r',(i*30)+'deg');
+    s.style.animationDelay=(i*0.03)+'s';
+    rays.appendChild(s);
+  }
+
+  // build fan cards
+  for(var f=0;f<3;f++){
+    var c=document.createElement('div');
+    c.className='card3d';
+    c.innerHTML='<div class="flip"><div class="face face-back"><span>赛小蜂</span></div><div class="face face-front"><img src="assets/tie-dongze-card.png" alt="" /></div></div>';
+    fan.appendChild(c);
+  }
+
+  function clearTimers(){ timers.forEach(clearTimeout); timers=[]; }
+  function later(fn,ms){ var t=setTimeout(fn,ms); timers.push(t); return t; }
+
+  function bits(){
+    confetti.innerHTML='';
+    var colors=['#f0c75e','#fff','#4ade80','#c9a227','#60a5fa'];
+    for(var i=0;i<28;i++){
+      var b=document.createElement('div');
+      b.className='bit';
+      b.style.background=colors[i%colors.length];
+      b.style.setProperty('--x',(Math.random()*320-160)+'px');
+      b.style.setProperty('--y',(Math.random()*-220-40)+'px');
+      b.style.setProperty('--rot',(Math.random()*720-360)+'deg');
+      b.style.animationDelay=(Math.random()*0.2)+'s';
+      confetti.appendChild(b);
+      requestAnimationFrame(function(el){ return function(){ el.classList.add('go'); }; }(b));
+    }
+  }
+
+  function celebrate(){
+    card.classList.add('flipped','glow');
+    if(mode==='foil') card.classList.add('foil-on');
+    scene.classList.add('dim');
+    rays.classList.add('on');
+    bits();
+    hint.textContent= mode==='foil' ? '签约成功 · 手指在卡上滑动看箔光' : '签约成功 · 纯卡到手';
+    btn.disabled=false;
+    btn.textContent='再开一包';
+    busy=false;
+  }
+
+  function reset(){
+    clearTimers();
+    pack.className='pack';
+    pack.style.opacity='';
+    pack.querySelector('#packWhole').style.display='';
+    foilStrip.style.transform='';
+    foilStrip.style.opacity='';
+    foilStrip.style.display='';
+    card.className='card3d';
+    card.style.setProperty('--rx','0deg');
+    card.style.setProperty('--ry','0deg');
+    card.style.setProperty('--mx','50%');
+    card.style.setProperty('--my','40%');
+    rays.classList.remove('on');
+    scene.classList.remove('dim');
+    confetti.innerHTML='';
+    fan.querySelectorAll('.card3d').forEach(function(el){ el.className='card3d'; el.style.transform=''; });
+    scene.classList.toggle('mode-drag', mode==='drag');
+    scene.classList.toggle('mode-fan', mode==='fan');
+    btn.disabled = mode==='drag';
+    btn.textContent = mode==='drag' ? '拖箔条撕开' : '撕开签约卡';
+    hint.textContent = mode==='drag' ? '按住金色箔条左右/向上拖' : '点按钮开始';
+    busy=false;
+  }
+
+  function splitPack(){
+    pack.querySelector('#packWhole').style.display='none';
+    foilStrip.style.display='none';
+    pack.classList.add('is-split');
+  }
+
+  function showMainCard(thenFlip){
+    card.classList.add('show','pop');
+    hint.textContent='卡弹出…';
+    if(thenFlip){
+      later(function(){ celebrate(); }, 650);
+    } else {
+      hint.textContent='点卡翻面';
+      busy=false;
+      btn.disabled=false;
+      btn.textContent='再开一包';
+    }
+  }
+
+  function openBase(withCharge){
+    if(busy) return;
+    busy=true; btn.disabled=true;
+    hint.textContent = withCharge ? '稀有蓄力中…' : '撕包中…';
+    if(withCharge){
+      pack.classList.add('shake');
+      later(function(){ pack.classList.remove('shake'); pack.classList.add('charge'); scene.classList.add('dim'); }, 480);
+      later(function(){
+        pack.classList.remove('charge');
+        pack.classList.add('is-ripping');
+        hint.textContent='撕开！';
+      }, 1400);
+      later(function(){ splitPack(); }, 1850);
+      later(function(){ pack.classList.add('is-gone'); }, 2600);
+      later(function(){ showMainCard(true); }, 2400);
+    } else {
+      pack.classList.add('shake');
+      later(function(){ pack.classList.remove('shake'); pack.classList.add('is-ripping'); hint.textContent='撕开！'; }, 450);
+      later(function(){ splitPack(); }, 900);
+      later(function(){ pack.classList.add('is-gone'); }, 1650);
+      later(function(){ showMainCard(true); }, 1450);
+    }
+  }
+
+  function openFan(){
+    if(busy) return;
+    busy=true; btn.disabled=true;
+    hint.textContent='撕包中…';
+    pack.classList.add('shake');
+    later(function(){ pack.classList.remove('shake'); pack.classList.add('is-ripping'); }, 400);
+    later(function(){ splitPack(); }, 850);
+    var cards=fan.querySelectorAll('.card3d');
+    var offs=[-78,0,78], rots=[-14,0,14];
+    later(function(){
+      pack.style.opacity='0';
+      cards.forEach(function(el,i){
+        later(function(){
+          el.classList.add('show','pop');
+          el.style.transform='translate('+offs[i]+'px,-10px) rotate('+rots[i]+'deg)';
+          el.style.zIndex=String(4+i);
+        }, i*140);
+      });
+    }, 1200);
+    later(function(){
+      cards[1].classList.add('flipped','glow');
+      scene.classList.add('dim'); rays.classList.add('on'); bits();
+      hint.textContent='签约成功 · 中间卡已翻开';
+      btn.disabled=false; btn.textContent='再开一包'; busy=false;
+      pack.style.opacity='';
+    }, 2200);
+  }
+
+  function startOpen(){
+    if(mode==='fan') return openFan();
+    if(mode==='charge') return openBase(true);
+    if(mode==='drag'){ hint.textContent='请拖金色箔条'; return; }
+    return openBase(false);
+  }
+
+  // drag tear
+  var drag={on:false,x0:0,y0:0,prog:0};
+  function onDragStart(e){
+    if(mode!=='drag' || busy) return;
+    var pt=e.touches?e.touches[0]:e;
+    drag={on:true,x0:pt.clientX,y0:pt.clientY,prog:0};
+    foilStrip.classList.add('dragging');
+  }
+  function onDragMove(e){
+    if(!drag.on) return;
+    e.preventDefault();
+    var pt=e.touches?e.touches[0]:e;
+    var dx=pt.clientX-drag.x0, dy=pt.clientY-drag.y0;
+    var dist=Math.sqrt(dx*dx+dy*dy);
+    drag.prog=Math.min(1, dist/110);
+    foilStrip.style.transform='translate('+dx+'px,'+dy+'px) rotate('+(dx*0.08)+'deg)';
+    foilStrip.style.opacity=String(1-drag.prog*0.4);
+    if(drag.prog>0.72){
+      drag.on=false;
+      foilStrip.classList.remove('dragging');
+      foilStrip.style.opacity='0';
+      busy=true; btn.disabled=true;
+      hint.textContent='撕开！';
+      pack.classList.add('is-ripping');
+      later(function(){ splitPack(); }, 350);
+      later(function(){ pack.classList.add('is-gone'); }, 1100);
+      later(function(){ showMainCard(true); }, 900);
+    }
+  }
+  function onDragEnd(){
+    if(!drag.on) return;
+    drag.on=false;
+    foilStrip.classList.remove('dragging');
+    if(drag.prog<=0.72){
+      foilStrip.style.transform='';
+      foilStrip.style.opacity='';
+      hint.textContent='再拖远一点';
+    }
+  }
+  foilStrip.addEventListener('mousedown', onDragStart);
+  foilStrip.addEventListener('touchstart', onDragStart, {passive:true});
+  window.addEventListener('mousemove', onDragMove, {passive:false});
+  window.addEventListener('touchmove', onDragMove, {passive:false});
+  window.addEventListener('mouseup', onDragEnd);
+  window.addEventListener('touchend', onDragEnd);
+
+  // foil tilt
+  card.addEventListener('pointermove', function(e){
+    if(!card.classList.contains('foil-on')) return;
+    var r=card.getBoundingClientRect();
+    var px=(e.clientX-r.left)/r.width;
+    var py=(e.clientY-r.top)/r.height;
+    card.style.setProperty('--mx', (px*100)+'%');
+    card.style.setProperty('--my', (py*100)+'%');
+    card.style.setProperty('--rx', ((0.5-py)*16)+'deg');
+    card.style.setProperty('--ry', ((px-0.5)*18)+'deg');
+  });
+  card.addEventListener('click', function(){
+    if(!card.classList.contains('show') || busy) return;
+    if(card.classList.contains('flipped')) return;
+    celebrate();
+  });
+
+  document.getElementById('modes').addEventListener('click', function(e){
+    var b=e.target.closest('button[data-mode]');
+    if(!b) return;
+    document.querySelectorAll('.modes button').forEach(function(x){ x.classList.toggle('on', x===b); });
+    mode=b.getAttribute('data-mode');
+    reset();
+  });
+
+  btn.addEventListener('click', function(){
+    if(btn.textContent.indexOf('再开')>=0){ reset(); later(startOpen, 60); return; }
+    startOpen();
+  });
+
+  reset();
+})();
+</script>
+</body>
+</html>

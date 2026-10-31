@@ -1,0 +1,44 @@
+<view class="page">
+  <view class="panel meet">
+    <view class="meet-ico">📝</view>
+    <view class="meet-body">
+      <text class="meet-title">每日免费签约</text>
+      <text class="meet-remain">{{remainText}}</text>
+    </view>
+    <button class="btn green" disabled="{{signDisabled}}" bindtap="onSign">{{signBtn}}</button>
+  </view>
+
+  <view class="panel success" wx:if="{{signSuccess}}">
+    <view class="ok">✓</view>
+    <view class="meet-body">
+      <text class="meet-title">{{successTitle}}</text>
+      <text class="meet-remain">签约成功 / 入队建档，去组阵凑齐 5 人</text>
+    </view>
+    <button class="btn gold" bindtap="goLineup">去组阵</button>
+  </view>
+
+  <view class="panel">
+    <view class="panel-head">
+      <text class="h2">我的卡册</text>
+      <text class="hint">{{countHint}}</text>
+    </view>
+    <view class="legend">
+      <text>主卡 = 你自己 · 其余为同城签约球员卡</text>
+    </view>
+    <view class="empty" wx:if="{{isEmpty}}">
+      <text class="empty-title">卡册还是空的</text>
+      <text class="empty-p">点上方「免费签约」领取今日同城档案卡</text>
+    </view>
+    <view class="grid" wx:else>
+      <view class="tile" wx:for="{{tiles}}" wx:key="id">
+        <image class="tile-img" src="{{item.cardUrl}}" mode="aspectFit"></image>
+        <text class="tile-name">{{item.name}}</text>
+        <text class="tile-meta">{{item.metaText}}</text>
+        <text class="tile-main" wx:if="{{item.isMain}}">主卡</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="pad"></view>
+  <card-tabbar active="album"></card-tabbar>
+</view>

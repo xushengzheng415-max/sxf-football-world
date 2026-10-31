@@ -1,0 +1,12 @@
+[
+  "normal: passed",
+  "missing: passed",
+  "transferEmpty: passed",
+  "skeleton: passed",
+  "error: passed",
+  "forbidden: passed",
+  "card preview / Escape: passed",
+  "anchor navigation: passed",
+  "transfer timeline / anchor: passed",
+  "1280x900: no horizontal overflow"
+]
