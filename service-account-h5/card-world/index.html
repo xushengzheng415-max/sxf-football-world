@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#07090f" />
+  <title>赛小蜂足球世界</title>
+  <link rel="stylesheet" href="css/holo-cosmos.css?v=20261031-init1" />
+  <link rel="stylesheet" href="css/app.css?v=20261031-init1" />
+</head>
+<body>
+  <div class="app" hidden>
+    <header class="topbar">
+      <a class="topbar__back" href="../me.html" aria-label="返回我的">‹</a>
+      <img class="topbar__logo" src="assets/player-card-holo/card-world-icon.jpg" alt="赛小蜂" />
+      <div class="topbar__title">
+        <strong>赛小蜂足球世界</strong>
+        <span>我的主卡 · 签约 · 组阵</span>
+      </div>
+      <span class="badge-free">免费</span>
+    </header>
+
+    <!-- 1. 我的主卡 -->
+    <section class="view is-active" data-view="main" id="view-main">
+      <div class="panel">
+        <div class="panel__head">
+          <h2>我的主卡</h2>
+          <span class="hint">铁栋泽 · 前锋 · #10</span>
+        </div>
+        <div class="hero-card-wrap">
+          <div id="hero-card"></div>
+          <p class="foil-tip">轻彩箔光已默认循环；晃鼠标略加强 · 卡面保持清晰</p>
+        </div>
+        <div class="stats-grid" id="ability-grid" aria-label="核心数据：综合分·出场·进球·荣誉"></div>
+        <div class="quick-nav" aria-label="玩法快捷入口">
+          <button type="button" class="quick-nav__btn" data-goto="lineup">
+            <span class="quick-nav__ico">⚽</span>
+            <span class="quick-nav__txt"><strong>去组阵</strong><em>凑齐 5 人发起轻挑战</em></span>
+          </button>
+          <button type="button" class="quick-nav__btn" data-goto="album">
+            <span class="quick-nav__ico">🤝</span>
+            <span class="quick-nav__txt"><strong>去签约</strong><em>每日免费收样卡</em></span>
+          </button>
+        </div>
+        <div class="action-row">
+          <button type="button" class="btn btn--gold" id="btn-share">分享主卡</button>
+          <button type="button" class="btn btn--ghost" id="btn-growth">成长印记</button>
+          <button type="button" class="btn btn--ghost" id="btn-gyro">陀螺仪</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel__head">
+          <h2>成长印记</h2>
+          <span class="hint">按周解锁边框 / 贴纸</span>
+        </div>
+        <div class="growth-row">
+          <div class="stamp"><div class="stamp__icon">🥇</div><div class="stamp__name">熔金边框</div></div>
+          <div class="stamp"><div class="stamp__icon">✨</div><div class="stamp__name">首秀贴纸</div></div>
+          <div class="stamp is-locked"><div class="stamp__icon">🔒</div><div class="stamp__name">十场出勤</div></div>
+          <div class="stamp is-locked"><div class="stamp__icon">🔒</div><div class="stamp__name">破门之夜</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 卡册 / 签约 -->
+    <section class="view" data-view="album" id="view-album">
+      <div class="panel">
+        <div class="meet-card">
+          <div class="meet-card__icon">🤝</div>
+          <div class="meet-card__body">
+            <strong>每日免费签约</strong>
+            <span id="meet-remain">今日剩余 1 次</span>
+          </div>
+          <button type="button" class="btn btn--green" id="btn-meet" style="flex:0 0 auto;min-width:96px">免费签约</button>
+        </div>
+
+        <!-- 签约成功引导：默认隐藏，签约后显示 -->
+        <div class="meet-success" id="meet-success" hidden>
+          <div class="meet-success__badge">✓</div>
+          <div class="meet-success__body">
+            <strong id="meet-success-title">签约成功</strong>
+            <span id="meet-success-desc">新卡已入册，去组阵凑齐 5 人吧</span>
+          </div>
+          <button type="button" class="btn btn--gold" id="btn-goto-lineup" style="flex:0 0 auto;min-width:96px">去组阵</button>
+        </div>
+
+        <div class="album-toolbar">
+          <div class="panel__head" style="margin:0">
+            <h2>我的卡册</h2>
+          </div>
+          <p id="album-count-hint">样卡说明 · 网格可点</p>
+        </div>
+
+        <!-- 空态（无任何卡时显示；原型默认有样卡） -->
+        <div class="album-empty" id="album-empty" hidden>
+          <div class="album-empty__ico">📚</div>
+          <strong>卡册还是空的</strong>
+          <p>点上方「每日免费签约」领取今日样卡；签约成功的卡会出现在这里，用于组阵。</p>
+          <p class="album-empty__tip">签约按同城名册发放，结果由服务端计算；样卡可入阵发起轻挑战。</p>
+        </div>
+
+        <div class="album-legend" id="album-legend">
+          <span class="album-legend__dot album-legend__dot--main"></span> 主卡（你自己）
+          <span class="album-legend__dot"></span> 签约样卡（可入阵）
+        </div>
+
+        <div class="card-grid" id="card-grid"></div>
+      </div>
+    </section>
+
+    <!-- 3. 组阵 -->
+    <section class="view" data-view="lineup" id="view-lineup">
+      <div class="panel">
+        <div class="panel__head">
+          <h2>5 人阵容</h2>
+          <span class="hint">1GK + 4 · 点选占位</span>
+        </div>
+        <div class="pitch-stage" aria-label="FUT 风格立体球场">
+          <div class="pitch">
+            <img class="pitch__bg" src="assets/pitch-3d.svg" alt="" />
+            <div class="slots slots--fut" id="pitch-slots"></div>
+          </div>
+        </div>
+        <div class="picker" id="picker">
+          <div class="panel__head" style="margin-top:4px">
+            <h2>选择球员</h2>
+            <span class="hint">来自卡册</span>
+          </div>
+          <div class="picker__list" id="picker-list"></div>
+        </div>
+        <div class="challenge">
+          <div class="challenge__meta">
+            <span>本周轻挑战（非排位）</span>
+            <strong id="challenge-pct">0%</strong>
+          </div>
+          <div class="progress"><div class="progress__bar" id="challenge-bar"></div></div>
+          <p class="foil-tip" id="challenge-tip" style="margin:8px 0 0;text-align:left">目标：凑齐 5 人（含门将）· 无胜负排名</p>
+        </div>
+        <div class="action-row">
+          <button type="button" class="btn btn--ghost" id="btn-view-report" hidden>查看战报</button>
+          <button type="button" class="btn btn--ghost" id="btn-save-lineup">保存阵容</button>
+          <button type="button" class="btn btn--gold" id="btn-challenge" disabled>发起轻挑战</button>
+        </div>
+        <div class="action-row" style="margin-top:8px">
+          <button type="button" class="btn btn--ghost" id="btn-battle-log">战报记录</button>
+        </div>
+        <div class="challenge-banner" id="challenge-banner" hidden>
+          <div class="challenge-banner__body">
+            <strong id="challenge-banner-title">应战：对方战报</strong>
+            <span id="challenge-banner-sub">用当前阵容挑战分享者的阵容 · 不上榜</span>
+          </div>
+          <button type="button" class="btn btn--gold" id="btn-accept-challenge" style="flex:0 0 auto;min-width:110px">用我的阵容应战</button>
+        </div>
+      </div>
+    </section>
+
+    <nav class="tabbar" aria-label="底部导航">
+      <button type="button" class="tab is-active" data-tab="main"><span class="tab__ico">🃏</span>我的主卡</button>
+      <button type="button" class="tab" data-tab="album"><span class="tab__ico">📚</span>卡册·签约</button>
+      <button type="button" class="tab" data-tab="lineup"><span class="tab__ico">⚽</span>组阵</button>
+    </nav>
+  </div>
+
+  <!-- 轻对战揭晓：VS → 揭晓 → 战报 -->
+  <div class="result-overlay" id="result-overlay" hidden aria-hidden="true">
+    <!-- Phase A: 对阵对比 -->
+    <div class="battle-phase battle-phase--vs" id="battle-vs" hidden>
+      <p class="battle-vs__title">本周轻对战 · 非排位</p>
+      <div class="battle-vs__row">
+        <div class="battle-side battle-side--mine">
+          <div class="battle-side__label">我方</div>
+          <div class="battle-side__cards" id="battle-my-cards"></div>
+          <div class="battle-side__ovr">综合 <strong id="battle-my-ovr">0</strong></div>
+        </div>
+        <div class="battle-vs__badge" aria-hidden="true">VS</div>
+        <div class="battle-side battle-side--opp">
+          <div class="battle-side__label">对手</div>
+          <div class="battle-side__cards" id="battle-opp-cards"></div>
+          <div class="battle-side__ovr">综合 <strong id="battle-opp-ovr">0</strong></div>
+        </div>
+      </div>
+      <p class="battle-vs__hint">按综合分 + 位置契合揭晓结果 · 不上榜</p>
+      <p class="battle-vs__skip" id="battle-vs-skip">轻触跳过</p>
+    </div>
+
+    <!-- Phase B: 揭晓动画 -->
+    <div class="battle-phase battle-phase--reveal" id="battle-reveal" hidden>
+      <div class="battle-reveal__scores">
+        <div class="battle-reveal__col">
+          <span>我方</span>
+          <strong id="battle-score-mine">0</strong>
+        </div>
+        <div class="battle-reveal__vs">:</div>
+        <div class="battle-reveal__col">
+          <span>对手</span>
+          <strong id="battle-score-opp">0</strong>
+        </div>
+      </div>
+      <div class="battle-reveal__word" id="battle-result-word">胜</div>
+      <p class="battle-reveal__comment" id="battle-comment">前场压制奏效</p>
+    </div>
+
+    <!-- Phase C: 战报面板 -->
+    <div class="result-panel" id="battle-report" role="dialog" aria-labelledby="result-title" hidden>
+      <div class="result-panel__glow" aria-hidden="true"></div>
+      <p class="result-panel__eyebrow">本周轻对战 · 非排位</p>
+      <h2 id="result-title">本场战报 <span class="result-badge-inline" id="result-outcome-badge">胜</span></h2>
+      <p class="result-panel__sub" id="result-sub">比分 0–0 · 不上榜</p>
+
+      <div class="result-scoreboard" aria-label="比分">
+        <div class="result-scoreboard__side">
+          <span>我方</span>
+          <strong id="report-my-score">0</strong>
+        </div>
+        <div class="result-scoreboard__mid">–</div>
+        <div class="result-scoreboard__side">
+          <span>对手</span>
+          <strong id="report-opp-score">0</strong>
+        </div>
+      </div>
+      <p class="result-comment" id="report-comment">前场压制奏效</p>
+
+      <div class="result-badges" id="result-badges">
+        <div class="result-badge is-earned">
+          <div class="result-badge__ico">🏅</div>
+          <div class="result-badge__name">首阵成型</div>
+          <div class="result-badge__desc">凑齐 5 人</div>
+        </div>
+        <div class="result-badge is-earned">
+          <div class="result-badge__ico">🧤</div>
+          <div class="result-badge__name">门将就位</div>
+          <div class="result-badge__desc">GK 占位</div>
+        </div>
+        <div class="result-badge is-earned">
+          <div class="result-badge__ico">✨</div>
+          <div class="result-badge__name">轻挑战章</div>
+          <div class="result-badge__desc">本周 mock</div>
+        </div>
+      </div>
+
+      <p class="result-note">不排行、不掉卡 · 只留本场战报</p>
+
+      <div class="action-row result-actions" id="result-actions-live">
+        <button type="button" class="btn btn--gold" id="btn-share-lineup">分享战报</button>
+        <button type="button" class="btn btn--ghost" id="btn-invite-challenge">邀请应战</button>
+        <button type="button" class="btn btn--ghost" id="btn-open-log-from-report">战报记录</button>
+        <button type="button" class="btn btn--ghost" id="btn-replay">再战一局</button>
+        <button type="button" class="btn btn--ghost" id="btn-result-close">继续调整</button>
+      </div>
+      <div class="action-row result-actions" id="result-actions-history" hidden>
+        <button type="button" class="btn btn--gold" id="btn-share-history">分享战报</button>
+        <button type="button" class="btn btn--ghost" id="btn-invite-history">邀请应战</button>
+        <button type="button" class="btn btn--ghost" id="btn-history-close">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 战报记录 sheet -->
+  <div class="blog-overlay" id="blog-overlay" hidden aria-hidden="true">
+    <div class="blog-sheet" role="dialog" aria-labelledby="blog-title">
+      <div class="blog-sheet__head">
+        <h2 id="blog-title">战报记录</h2>
+        <button type="button" class="blog-sheet__close" id="btn-blog-close" aria-label="关闭">×</button>
+      </div>
+      <p class="blog-sheet__tip">不上榜 · 不掉卡 · 可分享邀人应战</p>
+      <div class="blog-empty" id="blog-empty" hidden>
+        <div class="blog-empty__ico">📜</div>
+        <strong>还没有战报 · 组齐阵容发起轻挑战</strong>
+      </div>
+      <div class="blog-list" id="blog-list"></div>
+    </div>
+  </div>
+
+  <div class="meet-reveal" id="meet-reveal" aria-live="polite">
+    <div class="meet-reveal__title" id="meet-reveal-title">每日免费签约</div>
+    <div class="meet-reveal__stage">
+      <div class="meet-pack" id="meet-pack">
+        <div class="meet-pack__half meet-pack__half--top"><div class="meet-pack__face"></div></div>
+        <div class="meet-pack__half meet-pack__half--bot"><div class="meet-pack__face"></div></div>
+        <div class="meet-pack__face meet-pack__whole" id="meet-pack-whole">
+          <div class="meet-pack__brand"><strong>赛小蜂</strong><span>档案卡</span></div>
+        </div>
+        <div class="meet-pack__cutter"></div>
+        <div class="meet-pack__tear"></div>
+      </div>
+      <div class="meet-card3d" id="meet-card3d">
+        <div class="meet-card3d__flip" id="meet-reveal-flip">
+          <div class="meet-card3d__back">赛小蜂</div>
+          <div class="meet-card3d__front"><img src="assets/tie-dongze-card.png" alt="" id="meet-reveal-img" /><div class="meet-card3d__foil" id="meet-foil"></div></div>
+        </div>
+      </div>
+      <div class="meet-reveal__rays" id="meet-rays"></div>
+    </div>
+    <div class="meet-reveal__sub" id="meet-reveal-sub">档案展开 · 翻开箔光</div>
+    <button type="button" class="btn btn--gold" id="meet-reveal-close" style="min-width:160px;display:none">收入卡册</button>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="js/holo.js?v=20261031-init1"></script>
+  <script src="js/api.js?v=20261031-init1"></script>
+  <script src="js/app.js?v=20261031-init1"></script>
+</body>
+</html>

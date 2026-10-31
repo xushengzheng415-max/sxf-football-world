@@ -1,5 +1,7 @@
 /**
- * 卡世界本地 mock 状态（页面先行；接口后接 Trae stub）
+ * 小程序本地演示名册，不负责正式档案初始化。
+ * 服务号正式入口是 H5：/service-account-h5/card-world/
+ * 档案由主仓 webLoginApi 的 cardWorldLogin 按服务号会话创建，球员主档仍用主站数据。
  * 文案：签约 / 入队建档；禁止抽卡 / 开包 / 卡池话术
  */
 var CARD = '/assets/demo-card.png'
